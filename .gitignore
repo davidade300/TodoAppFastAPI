@@ -27,6 +27,8 @@ key.pub
 *~
 .*.sw?
 .cache
-
+notes.txt
+prints/*
+alembic.ini
 # macOS
 .DS_Store
