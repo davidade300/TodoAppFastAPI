@@ -13,7 +13,8 @@ from jose import jwt, JWTError
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# these two work together to add a signature to the JWT, to make sure that it's secure and authorized
+# these two work together to add a signature to the JWT,
+#  to make sure that it's secure and authorized
 SECRET_KEY = "ae4bbf98c0b7b2f92d79e5b3f90602c6d4a09a1e3fe36248b9d1b96153b18644"
 ALGORITHM = "HS256"
 
@@ -28,6 +29,7 @@ class CreateUserRequest(BaseModel):
     last_name: str
     pwd: str
     role: str
+    phone_number: str
 
     class Config:
         json_schema_extra = {
@@ -38,6 +40,7 @@ class CreateUserRequest(BaseModel):
                 "last_name": "Oliveira",
                 "pwd": "1234356",
                 "role": "admin",
+                "phone_Number": "123456789"
             }
         }
 
@@ -94,9 +97,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
             )
         return {"username": username, "id": user_id, "user_role": user_role}
     except JWTError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not valide user!"
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Could not valide user!")
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
@@ -107,6 +109,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
         first_name=create_user_request.first_name,
         last_name=create_user_request.last_name,
         role=create_user_request.role,
+        phone_number=create_user_request.phone_number,
         hashed_password=bcrypt_context.hash(create_user_request.pwd),
         is_active=True,
     )
