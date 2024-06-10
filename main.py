@@ -1,12 +1,14 @@
+"""main file"""
 from fastapi import FastAPI
 import uvicorn
-import models
 from database import engine
 from routers import auth, todos, admin, users
+from models import Base
+
 
 app = FastAPI(debug=True)
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 
 @app.get("/healthy")

@@ -31,7 +31,7 @@ class CreateUserRequest(BaseModel):
     role: str
     phone_number: str
 
-    class Config:
+    class ConfigDict:
         json_schema_extra = {
             "example": {
                 "username": "davidade300",
