@@ -7,7 +7,7 @@ from database import SessionLocal
 from sqlalchemy.orm import Session
 from .auth import get_current_user
 
-router = APIRouter(prefix="/auth", tags=["admin"])
+router = APIRouter(prefix="/admin", tags=["admin"])
 
 
 def get_db():
